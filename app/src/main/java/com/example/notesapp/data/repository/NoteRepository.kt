@@ -1,13 +1,13 @@
 package com.example.notesapp.data.repository
 
-import androidx.lifecycle.LiveData
 import com.example.notesapp.data.model.Note
 import com.example.notesapp.db.NoteDao
 import jakarta.inject.Inject
+import kotlinx.coroutines.flow.Flow
 
 class NoteRepository @Inject constructor(private val noteDao: NoteDao) {
 
-    val allNotes = noteDao.getAllNotes()
+    val allNotes: Flow<List<Note>> = noteDao.getAllNotes()
 
     suspend fun insertNote(note: Note) {
         noteDao.insertNote(note)
@@ -21,7 +21,7 @@ class NoteRepository @Inject constructor(private val noteDao: NoteDao) {
         noteDao.updateNote(note)
     }
 
-    fun getNoteById(id: Int): LiveData<Note> {
+    fun getNoteById(id: Int): Flow<Note> {
         return noteDao.getNoteById(id)
     }
 }

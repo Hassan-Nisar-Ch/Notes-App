@@ -1,16 +1,16 @@
-package com.example.notesapp.home
+package com.example.notesapp.presentation.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.notesapp.databinding.ItemNoteBinding
 import com.example.notesapp.data.model.Note
+import com.example.notesapp.databinding.ItemNoteBinding
 
 class NoteAdapter(
     private val onDeleteItemClick: (Note) -> Unit,
-    private val onItemClick: (id: Int) -> Unit
+    private val onItemClick: (note: Note) -> Unit
 ) : ListAdapter<Note, NoteAdapter.ViewHolder>(NoteDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,7 +26,7 @@ class NoteAdapter(
         val note = getItem(position)
 
         holder.binding.title.text = note.title
-        holder.binding.cardNote.setOnClickListener { onItemClick(note.id) }
+        holder.binding.cardNote.setOnClickListener { onItemClick(note) }
 
         holder.binding.ivDelete.setOnClickListener {
             onDeleteItemClick(note)

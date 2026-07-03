@@ -6,9 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/home_bg"
-    tools:context=".editor.EditorFragment">
+    tools:context=".presentation.editor.EditorFragment">
 
-    <com.example.notesapp.components.IconCardButton
+    <com.example.notesapp.presentation.components.IconCardButton
         android:id="@+id/cardBack"
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -21,7 +21,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.example.notesapp.components.IconCardButton
+    <com.example.notesapp.presentation.components.IconCardButton
         android:id="@+id/cardSave"
         android:layout_width="50dp"
         android:layout_height="50dp"

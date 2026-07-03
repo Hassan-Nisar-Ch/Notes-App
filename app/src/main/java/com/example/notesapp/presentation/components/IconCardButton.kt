@@ -1,4 +1,4 @@
-package com.example.notesapp.components
+package com.example.notesapp.presentation.components
 
 import android.content.Context
 import android.util.AttributeSet

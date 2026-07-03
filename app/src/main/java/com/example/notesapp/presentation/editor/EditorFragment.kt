@@ -1,0 +1,129 @@
+package com.example.notesapp.presentation.editor
+
+import android.app.AlertDialog
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.example.notesapp.databinding.FragmentEditorBinding
+import com.example.notesapp.util.launchAndRepeatWithViewLifecycle
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+
+@AndroidEntryPoint
+class EditorFragment : Fragment() {
+
+    private var _binding: FragmentEditorBinding? = null
+    private val binding get() = _binding!!
+
+    private val viewModel: EditorViewModel by viewModels()
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentEditorBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupListeners()
+        observeViewModel()
+
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    viewModel.onBackClicked()
+                }
+            }
+        )
+    }
+
+    private fun setupListeners() {
+        binding.apply {
+            cardBack.setOnClickListener {
+                viewModel.onBackClicked()
+            }
+
+            cardSave.setOnClickListener {
+                viewModel.onSaveClicked()
+            }
+
+            etTitle.doOnTextChanged { text, _, _, _ ->
+                if (etTitle.hasFocus()) {
+                    viewModel.onTitleChanged(text.toString())
+                }
+            }
+
+            etNote.doOnTextChanged { text, _, _, _ ->
+                if (etNote.hasFocus()) {
+                    viewModel.onContentChanged(text.toString())
+                }
+            }
+        }
+    }
+
+    private fun observeViewModel() {
+        launchAndRepeatWithViewLifecycle {
+            launch {
+                viewModel.uiState.collect { state ->
+                    binding.apply {
+                        // Update only if not focused to avoid cursor jumping while typing
+                        if (!etTitle.hasFocus() && etTitle.text.toString() != state.title) {
+                            etTitle.setText(state.title)
+                        }
+                        if (!etNote.hasFocus() && etNote.text.toString() != state.content) {
+                            etNote.setText(state.content)
+                        }
+                    }
+                }
+            }
+
+            launch {
+                viewModel.events.collect { event ->
+                    when (event) {
+                        is EditorEvent.ShowToast -> {
+                            Toast.makeText(requireContext(), event.message, Toast.LENGTH_SHORT)
+                                .show()
+                        }
+
+                        is EditorEvent.NavigateBack -> {
+                            findNavController().popBackStack()
+                        }
+
+                        is EditorEvent.ShowUnsavedChangesDialog -> {
+                            showUnsavedChangesDialog()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun showUnsavedChangesDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Unsaved Changes")
+            .setMessage("You have unsaved changes. Discard them?")
+            .setPositiveButton("Discard") { _, _ ->
+                findNavController().popBackStack()
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}

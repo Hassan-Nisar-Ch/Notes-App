@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.notesapp.home.HomeFragment"
+        android:name="com.example.notesapp.presentation.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
         <action
@@ -17,13 +17,14 @@
 
     <fragment
         android:id="@+id/editorFragment"
-        android:name="com.example.notesapp.editor.EditorFragment"
+        android:name="com.example.notesapp.presentation.editor.EditorFragment"
         android:label="fragment_editor"
         tools:layout="@layout/fragment_editor">
         <argument
-            android:name="noteId"
-            android:defaultValue="-1"
-            app:argType="integer" />
+            android:name="note"
+            app:argType="com.example.notesapp.data.model.Note"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 
 </navigation>
