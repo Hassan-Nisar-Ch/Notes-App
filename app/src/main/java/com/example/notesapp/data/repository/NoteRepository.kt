@@ -20,8 +20,4 @@ class NoteRepository @Inject constructor(private val noteDao: NoteDao) {
     suspend fun updateNote(note: Note) {
         noteDao.updateNote(note)
     }
-
-    fun getNoteById(id: Int): Flow<Note> {
-        return noteDao.getNoteById(id)
-    }
 }

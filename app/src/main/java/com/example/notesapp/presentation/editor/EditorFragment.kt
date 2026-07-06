@@ -76,8 +76,13 @@ class EditorFragment : Fragment() {
         launchAndRepeatWithViewLifecycle {
             viewModel.uiState.collect { state ->
                 binding.apply {
-                    etTitle.setText(state.title)
-                    etNote.setText(state.content)
+                    // Update only if not focused to avoid cursor jumping while typing
+                    if (!etTitle.hasFocus() && etTitle.text.toString() != state.title) {
+                        etTitle.setText(state.title)
+                    }
+                    if (!etNote.hasFocus() && etNote.text.toString() != state.content) {
+                        etNote.setText(state.content)
+                    }
                 }
             }
         }
@@ -86,8 +91,10 @@ class EditorFragment : Fragment() {
             viewModel.events.collect { event ->
                 when (event) {
                     is EditorEvent.ShowToast -> {
-                        Toast.makeText(requireContext(),
-                            getString(R.string.enter_title_and_content), Toast.LENGTH_SHORT)
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.enter_title_and_content), Toast.LENGTH_SHORT
+                        )
                             .show()
                     }
 
