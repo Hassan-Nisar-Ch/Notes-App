@@ -1,5 +1,21 @@
 <resources>
     <string name="app_name">Notes App</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="unsaved_changes">Unsaved Changes</string>
+    <string name="unsaved_changes_confirmation">You have unsaved changes. Discard them?</string>
+    <string name="discard">Discard</string>
+    <string name="cancel">Cancel</string>
+    <string name="enter_title_and_content">Please enter both title and content.</string>
+    <string name="credits">Credits</string>
+    <string name="designed_by">Designed by</string>
+    <string name="divya">Divya</string>
+    <string name="developed_by">Developed by</string>
+    <string name="hnc">HNC</string>
+    <string name="font">Font</string>
+    <string name="nunito">Nunito</string>
+    <string name="title">Title</string>
+    <string name="type_something">Type something...</string>
+    <string name="notes">Notes</string>
+    <string name="search_notes">Search notes...</string>
+    <string name="create_first_note">Create your first note !</string>
+    <string name="sample_note_title">Book Review : The Design of Everyday Things by Don Norman</string>
 </resources>

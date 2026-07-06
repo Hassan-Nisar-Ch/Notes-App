@@ -11,10 +11,10 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.notesapp.R
 import com.example.notesapp.databinding.FragmentEditorBinding
 import com.example.notesapp.util.launchAndRepeatWithViewLifecycle
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class EditorFragment : Fragment() {
@@ -74,35 +74,29 @@ class EditorFragment : Fragment() {
 
     private fun observeViewModel() {
         launchAndRepeatWithViewLifecycle {
-            launch {
-                viewModel.uiState.collect { state ->
-                    binding.apply {
-                        // Update only if not focused to avoid cursor jumping while typing
-                        if (!etTitle.hasFocus() && etTitle.text.toString() != state.title) {
-                            etTitle.setText(state.title)
-                        }
-                        if (!etNote.hasFocus() && etNote.text.toString() != state.content) {
-                            etNote.setText(state.content)
-                        }
-                    }
+            viewModel.uiState.collect { state ->
+                binding.apply {
+                    etTitle.setText(state.title)
+                    etNote.setText(state.content)
                 }
             }
+        }
 
-            launch {
-                viewModel.events.collect { event ->
-                    when (event) {
-                        is EditorEvent.ShowToast -> {
-                            Toast.makeText(requireContext(), event.message, Toast.LENGTH_SHORT)
-                                .show()
-                        }
+        launchAndRepeatWithViewLifecycle {
+            viewModel.events.collect { event ->
+                when (event) {
+                    is EditorEvent.ShowToast -> {
+                        Toast.makeText(requireContext(),
+                            getString(R.string.enter_title_and_content), Toast.LENGTH_SHORT)
+                            .show()
+                    }
 
-                        is EditorEvent.NavigateBack -> {
-                            findNavController().popBackStack()
-                        }
+                    is EditorEvent.NavigateBack -> {
+                        findNavController().popBackStack()
+                    }
 
-                        is EditorEvent.ShowUnsavedChangesDialog -> {
-                            showUnsavedChangesDialog()
-                        }
+                    is EditorEvent.ShowUnsavedChangesDialog -> {
+                        showUnsavedChangesDialog()
                     }
                 }
             }
@@ -111,12 +105,12 @@ class EditorFragment : Fragment() {
 
     private fun showUnsavedChangesDialog() {
         AlertDialog.Builder(requireContext())
-            .setTitle("Unsaved Changes")
-            .setMessage("You have unsaved changes. Discard them?")
-            .setPositiveButton("Discard") { _, _ ->
+            .setTitle(getString(R.string.unsaved_changes))
+            .setMessage(getString(R.string.unsaved_changes_confirmation))
+            .setPositiveButton(getString(R.string.discard)) { _, _ ->
                 findNavController().popBackStack()
             }
-            .setNegativeButton("Cancel") { dialog, _ ->
+            .setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()

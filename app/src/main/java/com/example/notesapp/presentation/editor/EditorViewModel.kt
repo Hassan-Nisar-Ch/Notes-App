@@ -47,7 +47,7 @@ class EditorViewModel @Inject constructor(
         val content = _uiState.value.content.trim()
 
         if (title.isEmpty() || content.isEmpty()) {
-            viewModelScope.launch { _events.emit(EditorEvent.ShowToast("Please enter both title and content.")) }
+            viewModelScope.launch { _events.emit(EditorEvent.ShowToast) }
             return
         }
 
@@ -86,7 +86,7 @@ data class EditorUiState(
 )
 
 sealed class EditorEvent {
-    data class ShowToast(val message: String) : EditorEvent()
+    object ShowToast : EditorEvent()
     object NavigateBack : EditorEvent()
     object ShowUnsavedChangesDialog : EditorEvent()
 }

@@ -7,4 +7,5 @@
     <color name="dialog_txt">#CFCFCF</color>
     <color name="search_txt">#CCCCCC</color>
     <color name="editor_txt">#9A9A9A</color>
+    <color name="list_item_color">#91F48F</color>
 </resources>

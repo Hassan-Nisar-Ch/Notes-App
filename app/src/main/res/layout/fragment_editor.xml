@@ -12,12 +12,9 @@
         android:id="@+id/cardBack"
         android:layout_width="50dp"
         android:layout_height="50dp"
-
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-
         app:iconSrc="@drawable/back_icon"
-
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,11 +22,8 @@
         android:id="@+id/cardSave"
         android:layout_width="50dp"
         android:layout_height="50dp"
-
         android:layout_marginEnd="24dp"
-
         app:iconSrc="@drawable/save_icon"
-
         app:layout_constraintBottom_toBottomOf="@id/cardBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/cardBack" />
@@ -41,7 +35,7 @@
         android:layout_marginTop="24dp"
         android:background="@android:color/transparent"
         android:fontFamily="@font/nunito_regular"
-        android:hint="Title"
+        android:hint="@string/title"
         android:importantForAutofill="no"
         android:inputType="textMultiLine|textCapSentences"
         android:textColor="@color/white"
@@ -78,7 +72,7 @@
             android:background="@null"
             android:fontFamily="@font/nunito_regular"
             android:gravity="top"
-            android:hint="Type something..."
+            android:hint="@string/type_something"
             android:importantForAutofill="no"
             android:inputType="textMultiLine|textCapSentences"
             android:overScrollMode="always"

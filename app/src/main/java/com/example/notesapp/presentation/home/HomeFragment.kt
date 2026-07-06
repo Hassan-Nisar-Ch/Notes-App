@@ -15,7 +15,6 @@ import com.example.notesapp.data.model.Note
 import com.example.notesapp.databinding.FragmentHomeBinding
 import com.example.notesapp.util.launchAndRepeatWithViewLifecycle
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -61,26 +60,26 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeViewModel(adapter: NoteAdapter) {
+
         launchAndRepeatWithViewLifecycle {
-            launch {
-                viewModel.uiState.collect { state ->
-                    adapter.submitList(state.notes)
-                    binding.layoutEmpty.visibility =
-                        if (state.isEmpty) View.VISIBLE else View.GONE
-                }
+            viewModel.uiState.collect { state ->
+                adapter.submitList(state.notes)
+                binding.layoutEmpty.visibility =
+                    if (state.isEmpty) View.VISIBLE else View.GONE
             }
+        }
 
-            launch {
-                viewModel.events.collect { event ->
-                    when (event) {
-                        is HomeEvent.NavigateToEditor -> {
-                            val action = HomeFragmentDirections.actionHomeFragmentToEditorFragment(event.note)
-                            findNavController().navigate(action)
-                        }
+        launchAndRepeatWithViewLifecycle {
+            viewModel.events.collect { event ->
+                when (event) {
+                    is HomeEvent.NavigateToEditor -> {
+                        val action =
+                            HomeFragmentDirections.actionHomeFragmentToEditorFragment(event.note)
+                        findNavController().navigate(action)
+                    }
 
-                        is HomeEvent.ShowDeleteConfirmation -> {
-                            showDeleteDialog(event.note)
-                        }
+                    is HomeEvent.ShowDeleteConfirmation -> {
+                        showDeleteDialog(event.note)
                     }
                 }
             }

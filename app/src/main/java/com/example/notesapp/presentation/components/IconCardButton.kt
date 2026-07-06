@@ -37,8 +37,4 @@ class IconCardButton @JvmOverloads constructor(
             }
         }
     }
-
-    fun setIcon(iconRes: Int) {
-        binding.ivIcon.setImageResource(iconRes)
-    }
 }

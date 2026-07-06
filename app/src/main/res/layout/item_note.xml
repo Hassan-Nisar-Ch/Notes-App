@@ -12,7 +12,7 @@
         android:id="@+id/cardNote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#91F48F"
+        android:background="@color/list_item_color"
         android:padding="16dp">
 
         <TextView
@@ -21,8 +21,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/nunito_regular"
-            android:gravity="left"
-            android:text="Book Review : The Design of Everyday Things by Don Norman"
+            android:gravity="start"
+            android:text="@string/sample_note_title"
             android:textColor="@color/black"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
