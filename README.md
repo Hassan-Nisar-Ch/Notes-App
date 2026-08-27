@@ -1,4 +1,3 @@
-```markdown
 # Notes App
 
 Simple, offline-first note-taking Android app built with Kotlin and XML that follows Clean Architecture principles and MVVM for a clear separation of concerns.
@@ -16,4 +15,3 @@ Simple, offline-first note-taking Android app built with Kotlin and XML that fol
 - Architecture: MVVM + Clean Architecture inspired package layout
 - Notable areas: local database (app/src/main/java/.../db), dependency setup (di), presentation layer (ViewModels / UI)
 - Build: Gradle (Kotlin DSL) — see `build.gradle.kts` and `app/build.gradle.kts`
-```
